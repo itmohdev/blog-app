@@ -16,12 +16,13 @@ export class User {
   @Column({ length: 30 })
   password: string;
 
-  @Column({
-    type: 'enum',
-    enum: RoleUser,
-    default: RoleUser.USER,
-  })
-  role: string;
+  // @Column({
+  //   type: 'enum',
+  //   enum: RoleUser,
+  //   default: RoleUser.USER,
+  // })
+  @Column({type: "varchar"})
+  role: RoleUser;
 
   @Column({ default: false })
   status: boolean;

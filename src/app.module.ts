@@ -12,6 +12,7 @@ import * as joi from 'joi';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ".env",
       validationSchema: joi.object({
         MONGODB_URI: joi.string().required(),
         MSSQLDB_USERNAME: joi.string().required(),
@@ -20,6 +21,8 @@ import * as joi from 'joi';
         MSSQLDB_HOST: joi.string().required(),
         MSSQLDB_PORT: joi.number().required(),
         APP_PORT: joi.number().required(),
+        APP_SECRETKEY: joi.string().required(),
+        APP_EXPIREATION: joi.number().required(),
       }),
     }),
     UserModule,

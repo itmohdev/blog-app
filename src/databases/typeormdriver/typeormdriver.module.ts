@@ -11,12 +11,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         username: configService.get("MSSQLDB_USERNAME"),
         password: configService.get("MSSQLDB_PASSWORD"),
         database: configService.get("MSSQLDB_NAME"),
-        entities: ['src/**/**/*.entity.{ts, js}'],
+        entities: ['dist/**/entity/*.entity.js'],
         synchronize: true,
         logging: true,
         port: configService.get("MSSQLDB_PORT"),
-        extra: {},
+        extra: {
+          trustServerCertificate: true
+        },
       }),
+      inject: [ConfigService]
     }),
   ],
 })

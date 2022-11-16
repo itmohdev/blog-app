@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, FindOptionsWhere } from 'typeorm';
 import { CreateUserDto } from './dto/createuser.dto';
 import { SearchUserDto } from './dto/searchuser.dto';
 import { User } from './entity/user.entity';
@@ -17,7 +17,7 @@ export class UserService {
 
   async findUser(filterUser: SearchUserDto): Promise<User> {
     try {
-      const user = await this.userRepository.findOne({ where: filterUser });
+      const user = await this.userRepository.findOne({ where: filterUser as FindOptionsWhere<User>});
       if (!user) {
         throw new HttpException(
           'there are no user with this data',
@@ -63,7 +63,7 @@ export class UserService {
   async findAll(queryInputList: QueryInputListDto): Promise<[] | User[]> {
     try {
       const users = await this.userRepository.find({
-        where: queryInputList.filter,
+        where: queryInputList.filter as FindOptionsWhere<User>,
         skip: queryInputList.skip,
         take: queryInputList.limit || 10,
         order: queryInputList.order,
@@ -97,7 +97,7 @@ export class UserService {
           updateInput.password,
         );
       }
-      const update = await this.userRepository.update(user.id, updateInput);
+      const update = await this.userRepository.update(user.id, updateInput as Partial<User>);
       const updatedUser = await this.findUser({ id: userId });
       return updatedUser;
     } catch (error) {
@@ -154,7 +154,7 @@ export class UserService {
     }
   }
 
-  async createHashPassword(password: string) {
+  private async createHashPassword(password: string) {
     try {
       const salt = await bcrypt.genSalt(12);
       const hash = await bcrypt.hash(password, salt);
@@ -164,7 +164,7 @@ export class UserService {
     }
   }
 
-  async confirmPassword(password, hash): Promise<boolean> {
+  private async confirmPassword(password, hash): Promise<boolean> {
     try {
       const comparePassword = await bcrypt.compare(password, hash);
       if (!comparePassword) {
