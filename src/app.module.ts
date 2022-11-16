@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { MongoosdriverModule } from './databases/mongoosdriver/mongoosdriver.module';
 import { TypeormdriverModule } from './databases/typeormdriver/typeormdriver.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 import * as joi from 'joi';
 
 @Module({
@@ -24,6 +25,7 @@ import * as joi from 'joi';
     UserModule,
     MongoosdriverModule,
     TypeormdriverModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
