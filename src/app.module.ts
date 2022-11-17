@@ -6,6 +6,7 @@ import { MongoosdriverModule } from './databases/mongoosdriver/mongoosdriver.mod
 import { TypeormdriverModule } from './databases/typeormdriver/typeormdriver.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { PostModule } from './post/post.module';
 import * as joi from 'joi';
 
 @Module({
@@ -29,6 +30,7 @@ import * as joi from 'joi';
     MongoosdriverModule,
     TypeormdriverModule,
     AuthModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
