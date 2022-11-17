@@ -7,19 +7,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'mssql',
-        host: configService.get("MSSQLDB_HOST"),
-        username: configService.get("MSSQLDB_USERNAME"),
-        password: configService.get("MSSQLDB_PASSWORD"),
-        database: configService.get("MSSQLDB_NAME"),
+        host: configService.get('MSSQLDB_HOST'),
+        username: configService.get('MSSQLDB_USERNAME'),
+        password: configService.get('MSSQLDB_PASSWORD'),
+        database: configService.get('MSSQLDB_NAME'),
         entities: ['dist/**/entity/*.entity.js'],
         synchronize: true,
         logging: true,
-        port: configService.get("MSSQLDB_PORT"),
+        port: configService.get('MSSQLDB_PORT'),
         extra: {
-          trustServerCertificate: true
+          trustServerCertificate: true,
         },
+       autoLoadEntities: true,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
   ],
 })
